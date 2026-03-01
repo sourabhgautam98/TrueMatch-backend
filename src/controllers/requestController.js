@@ -1,8 +1,8 @@
-const ConnectionRequest = require("../models/connectionRequest");
-const User = require("../models/user");
+import ConnectionRequest from "../models/connectionRequest.js";
+import User from "../models/user.js";
 
 // 📌 Send Connection Request
-exports.sendRequest = async (req, res) => {
+export const sendRequest = async (req, res) => {
   try {
     const fromUserId = req.user._id;
     const toUserId = req.params.toUserId;
@@ -47,7 +47,7 @@ exports.sendRequest = async (req, res) => {
 };
 
 // 📌 Review Connection Request
-exports.reviewRequest = async (req, res) => {
+export const reviewRequest = async (req, res) => {
   try {
     const loggedInUser = req.user;
     const { status, requestId } = req.params;

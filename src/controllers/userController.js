@@ -1,10 +1,10 @@
-const ConnectionRequest = require("../models/connectionRequest");
-const User = require("../models/user");
+import ConnectionRequest from "../models/connectionRequest.js";
+import User from "../models/user.js";
 
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender skills";
 
 // 📌 Get received requests
-exports.getReceivedRequests = async (req, res) => {
+export const getReceivedRequests = async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -23,7 +23,7 @@ exports.getReceivedRequests = async (req, res) => {
 };
 
 // 📌 Get user connections
-exports.getConnections = async (req, res) => {
+export const getConnections = async (req, res) => {
   try {
     const loggedInUser = req.user;
 
@@ -57,7 +57,7 @@ exports.getConnections = async (req, res) => {
 };
 
 // 📌 Get feed (suggested users)
-exports.getFeed = async (req, res) => {
+export const getFeed = async (req, res) => {
   try {
     const loggedInUser = req.user;
 

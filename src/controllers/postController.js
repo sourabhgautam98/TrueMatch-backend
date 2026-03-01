@@ -1,7 +1,7 @@
-const Post = require("../models/post");
+import Post from "../models/post.js";
 
 // 👉 Create Post
-const createPost = async (req, res) => {
+export const createPost = async (req, res) => {
   try {
     const { description, image } = req.body;
 
@@ -24,7 +24,7 @@ const createPost = async (req, res) => {
 };
 
 // 👉 Get All Posts
-const getAllPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
       .populate("userId", "firstName lastName emailId photoUrl")
@@ -37,7 +37,7 @@ const getAllPosts = async (req, res) => {
 };
 
 // 👉 Get My Posts
-const getMyPosts = async (req, res) => {
+export const getMyPosts = async (req, res) => {
   try {
     const posts = await Post.find({ userId: req.user._id })
       .populate("userId", "firstName lastName emailId")
@@ -50,7 +50,7 @@ const getMyPosts = async (req, res) => {
 };
 
 // 👉 Delete Post
-const deletePost = async (req, res) => {
+export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -70,5 +70,3 @@ const deletePost = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-module.exports = { createPost, getAllPosts, getMyPosts, deletePost };

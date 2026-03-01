@@ -1,7 +1,7 @@
-const { validateProfileEditData } = require("../utils/validation");
+import { validateProfileEditData } from "../utils/validation.js";
 
 // View Profile
-exports.viewProfile = async (req, res) => {
+export const viewProfile = async (req, res) => {
   try {
     const { firstName, lastName, photoUrl, skills, gender, age } = req.user;
 
@@ -19,7 +19,7 @@ exports.viewProfile = async (req, res) => {
 };
 
 // Edit Profile
-exports.editProfile = async (req, res) => {
+export const editProfile = async (req, res) => {
   try {
     if (!validateProfileEditData(req)) {
       throw new Error("Invalid Edit Request");
@@ -33,7 +33,10 @@ exports.editProfile = async (req, res) => {
 
     await loggedInUser.save();
 
-    res.send(`${loggedInUser.firstName}, your profile updated successfully`);
+    res.json({
+      message: `${loggedInUser.firstName}, your profile updated successfully`,
+      data: loggedInUser,
+    });
   } catch (err) {
     res.status(400).send("ERROR: " + err.message);
   }

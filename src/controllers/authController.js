@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
-const User = require("../models/user");
-const { validateSignUpData } = require("../utils/validation");
+import bcrypt from "bcrypt";
+import User from "../models/user.js";
+import { validateSignUpData } from "../utils/validation.js";
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     validateSignUpData(req.body);
     const { firstName, lastName, emailId, password } = req.body;
@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { emailId, password } = req.body;
     const user = await User.findOne({ emailId });
@@ -40,21 +40,23 @@ exports.login = async (req, res) => {
     const token = await user.getJWT();
     res.cookie("token", token, {
       expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      httpOnly: false,
     });
 
     const userResponse = {
       firstName: user.firstName,
       lastName: user.lastName,
       emailId: user.emailId,
+      token
     };
 
-    res.send(userResponse);
+    res.json(userResponse);
   } catch (err) {
     res.status(400).send("ERROR: " + err.message);
   }
 };
 
-exports.logout = (req, res) => {
+export const logout = (req, res) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
   });

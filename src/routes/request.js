@@ -1,10 +1,11 @@
-const express = require("express");
+import express from "express";
+import { userAuth } from "../middlewares/auth.js";
+import { sendRequest, reviewRequest } from "../controllers/requestController.js";
+
 const router = express.Router();
-const { userAuth } = require("../middlewares/auth");
-const requestController = require("../controllers/requestController");
 
 // Routes
-router.post("/send/:status/:toUserId", userAuth, requestController.sendRequest);
-router.post("/review/:status/:requestId", userAuth, requestController.reviewRequest);
+router.post("/send/:status/:toUserId", userAuth, sendRequest);
+router.post("/review/:status/:requestId", userAuth, reviewRequest);
 
-module.exports = router;
+export default router;

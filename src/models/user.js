@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+import mongoose from "mongoose";
+import validator from "validator";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -53,6 +53,10 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+  about: {
+    type: String,
+    default: "",
+  },
   skills: {
     type: [String],
     validate(value) {
@@ -80,4 +84,4 @@ const isPasswordValid = await bcrypt.compare(passwordInputByUser, passwordHash);
 return isPasswordValid;
 };
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model("User", userSchema);
